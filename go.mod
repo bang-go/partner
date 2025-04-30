@@ -1,4 +1,4 @@
-module github.com/bang-go/vendor
+module github.com/bang-go/partner
 
 go 1.23.2
 
