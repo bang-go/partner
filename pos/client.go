@@ -6,11 +6,7 @@ import (
 	"github.com/aliyun/alibabacloud-oss-go-sdk-v2/oss/credentials"
 )
 
-type Config struct {
-	AccessKeyId     string
-	AccessKeySecret string
-	*oss.Config
-}
+type Config = oss.Config
 type Options = oss.Options
 type AppendOptions = oss.AppendOptions
 type PutObjectRequest = oss.PutObjectRequest
@@ -32,10 +28,13 @@ type ClientEntity struct {
 
 func New(config *Config) Client {
 	client := &ClientEntity{}
-	config.CredentialsProvider = credentials.NewStaticCredentialsProvider(config.AccessKeyId, config.AccessKeySecret)
 	client.Config = config
-	client.ossClient = oss.NewClient(config.Config)
+	client.ossClient = oss.NewClient(config)
 	return client
+}
+
+func NewCredentialsProvider(accessKeyId, accessKeySecret string) credentials.CredentialsProvider {
+	return credentials.NewStaticCredentialsProvider(accessKeyId, accessKeySecret)
 }
 
 func (s *ClientEntity) PutObject(req *PutObjectRequest, optFns ...func(*Options)) (*PutObjectResult, error) {
