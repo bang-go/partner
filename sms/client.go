@@ -16,8 +16,11 @@ type QuerySendDetailsRequest = dysmsapi.QuerySendDetailsRequest
 type QuerySendDetailsResponse = dysmsapi.QuerySendDetailsResponse
 type Client interface {
 	SendSms(*SendSmsRequest) (*SendSmsResponse, error)
+	SendSmsWithOptions(*SendSmsRequest, *Option) (*SendSmsResponse, error)
 	SendBatchSms(*SendBatchSmsRequest) (*SendBatchSmsResponse, error)
+	SendBatchSmsWithOptions(*SendBatchSmsRequest, *Option) (*SendBatchSmsResponse, error)
 	QuerySendDetails(*QuerySendDetailsRequest) (*QuerySendDetailsResponse, error)
+	QuerySendDetailsWithOptions(*QuerySendDetailsRequest, *Option) (*QuerySendDetailsResponse, error)
 }
 
 type ClientEntity struct {
@@ -43,4 +46,16 @@ func (s *ClientEntity) SendBatchSms(request *SendBatchSmsRequest) (*SendBatchSms
 }
 func (s *ClientEntity) QuerySendDetails(request *QuerySendDetailsRequest) (*QuerySendDetailsResponse, error) {
 	return s.smsClient.QuerySendDetails(request)
+}
+
+func (s *ClientEntity) SendSmsWithOptions(request *SendSmsRequest, runtime *Option) (*SendSmsResponse, error) {
+	return s.smsClient.SendSmsWithOptions(request, runtime)
+}
+
+func (s *ClientEntity) SendBatchSmsWithOptions(request *SendBatchSmsRequest, runtime *Option) (*SendBatchSmsResponse, error) {
+	return s.smsClient.SendBatchSmsWithOptions(request, runtime)
+}
+
+func (s *ClientEntity) QuerySendDetailsWithOptions(request *QuerySendDetailsRequest, runtime *Option) (*QuerySendDetailsResponse, error) {
+	return s.smsClient.QuerySendDetailsWithOptions(request, runtime)
 }
